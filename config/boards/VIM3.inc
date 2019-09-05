@@ -230,7 +230,7 @@ tweaks_platform() {
 
 ## Build deb packages for platform
 build_deb_packages_platform() {
-	if [ "$LINUX" == "4.9" ]; then
+	if [ "$LINUX" == "4.9" ] && [ "$DISTRIB_RELEASE" != "buster" ]; then
 		info_msg "Building Kodi packages..."
 		# FIXME
 		# remove build stamp to force build for other arch
@@ -278,7 +278,7 @@ build_deb_packages_platform() {
 
 ## Install deb packages for platform
 install_deb_packages_platform() {
-	if [ "$LINUX" == "4.9" ]; then
+	if [ "$LINUX" == "4.9" ] && [ "$DISTRIB_RELEASE" != "buster" ]; then
 
 		cd $ROOT
 		# Install Kodi in chroot

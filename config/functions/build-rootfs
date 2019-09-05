@@ -116,16 +116,18 @@ install_common()
 	fi
 
 	# configure network manager
-	sed "s/managed=\(.*\)/managed=true/g" -i $ROOTFS_TEMP/etc/NetworkManager/NetworkManager.conf
-	# Just regular DNS and maintain /etc/resolv.conf as a file
-	sed "/dns/d" -i $ROOTFS_TEMP/etc/NetworkManager/NetworkManager.conf
-	sed "s/\[main\]/\[main\]\ndns=default\nrc-manager=file/g" -i $ROOTFS_TEMP/etc/NetworkManager/NetworkManager.conf
-	if [[ -n $NM_IGNORE_DEVICES ]]; then
-		mkdir -p $ROOTFS_TEMP/etc/NetworkManager/conf.d/
-		cat <<-EOF > $ROOTFS_TEMP/etc/NetworkManager/conf.d/10-ignore-interfaces.conf
-		[keyfile]
-		unmanaged-devices=$NM_IGNORE_DEVICES
-		EOF
+	if [ -f $ROOTFS_TEMP/etc/NetworkManager/NetworkManager.conf ]; then
+		sed "s/managed=\(.*\)/managed=true/g" -i $ROOTFS_TEMP/etc/NetworkManager/NetworkManager.conf
+		# Just regular DNS and maintain /etc/resolv.conf as a file
+		sed "/dns/d" -i $ROOTFS_TEMP/etc/NetworkManager/NetworkManager.conf
+		sed "s/\[main\]/\[main\]\ndns=default\nrc-manager=file/g" -i $ROOTFS_TEMP/etc/NetworkManager/NetworkManager.conf
+		if [[ -n $NM_IGNORE_DEVICES ]]; then
+			mkdir -p $ROOTFS_TEMP/etc/NetworkManager/conf.d/
+			cat <<-EOF > $ROOTFS_TEMP/etc/NetworkManager/conf.d/10-ignore-interfaces.conf
+			[keyfile]
+			unmanaged-devices=$NM_IGNORE_DEVICES
+			EOF
+		fi
 	fi
 
 	# nsswitch settings for sane DNS behavior: remove resolve, assure libnss-myhostname support
@@ -188,6 +190,16 @@ install_distribution_specific()
 		sed -i "s/#RateLimitIntervalSec=.*/RateLimitIntervalSec=30s/g" $ROOTFS_TEMP/etc/systemd/journald.conf
 		sed -i "s/#RateLimitBurst=.*/RateLimitBurst=10000/g" $ROOTFS_TEMP/etc/systemd/journald.conf
 		;;
+	buster)
+		# remove doubled uname from motd
+		[[ -f $ROOTFS_TEMP/etc/update-motd.d/10-uname ]] && rm $ROOTFS_TEMP/etc/update-motd.d/10-uname
+
+		# disable watchdog
+		eval 'LC_ALL=C LANG=C chroot $ROOTFS_TEMP /bin/bash -c "systemctl disable watchdog.service"'
+		# Disable Lirc service
+		eval 'LC_ALL=C LANG=C chroot $ROOTFS_TEMP /bin/bash -c "systemctl disable lircd.socket lircd.service lircd-setup.service lircd-uinput.service lircmd.service irexec.service"'
+		;;
+
 	esac
 }
 

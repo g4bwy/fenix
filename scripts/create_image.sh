@@ -61,7 +61,7 @@ build_debs() {
 		if [ "$LINUX" == "mainline" ]; then
 			LINUX_VER=$(cat ${BUILD}/linux-mainline-*/.config | grep "Linux/arm64" | awk '{print $3}')
 		else
-			LINUX_VER=$(cat ${ROOT}/linux/.config | grep "Linux/arm64" | awk '{print $3}')
+			LINUX_VER=$(cat ${ROOT}/`basename ${LINUX_DIR}`/.config | grep "Linux/arm64" | awk '{print $3}')
 		fi
 
 		if [ "$LINUX_DEB_VER" != "$LINUX_VER" ]; then

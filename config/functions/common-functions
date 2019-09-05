@@ -270,7 +270,7 @@ get_package_list_hash()
 
 ## create_sources_list <release> <basedir>
 ##
-## <release>: stretch|bionic
+## <release>: stretch|bionic|buster
 ## <basedir>: path to root directory
 create_sources_list()
 {
@@ -310,5 +310,22 @@ create_sources_list()
 	#deb-src http://${UBUNTU_MIRROR} ${release}-backports main restricted universe multiverse
 	EOF
 	;;
+
+	buster)
+	cat <<-EOF > $basedir/etc/apt/sources.list
+	deb http://${DEBIAN_MIRROR} $release main contrib non-free
+	deb-src http://${DEBIAN_MIRROR} $release main contrib non-free
+
+	deb http://${DEBIAN_MIRROR} ${release}-updates main contrib non-free
+	deb-src http://${DEBIAN_MIRROR} ${release}-updates main contrib non-free
+
+	deb http://${DEBIAN_MIRROR} ${release}-backports main contrib non-free
+	deb-src http://${DEBIAN_MIRROR} ${release}-backports main contrib non-free
+
+	deb http://security.debian.org/ ${release}/updates main contrib non-free
+	deb-src http://security.debian.org/ ${release}/updates main contrib non-free
+	EOF
+	;;
+
 	esac
 }

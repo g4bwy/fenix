@@ -319,6 +319,11 @@ build_board_deb() {
 			cp $ROOT/archives/filesystem/bsp/10-override-random-mac.conf $pkgdir/usr/lib/NetworkManager/conf.d/
 		;;
 
+		buster)
+			mkdir -p $pkgdir/usr/lib/NetworkManager/conf.d/
+			cp $ROOT/archives/filesystem/bsp/zz-override-wifi-powersave-off.conf $pkgdir/usr/lib/NetworkManager/conf.d/
+			cp $ROOT/archives/filesystem/bsp/10-override-random-mac.conf $pkgdir/usr/lib/NetworkManager/conf.d/
+		;;
 	esac
 
 	# Create board deb file

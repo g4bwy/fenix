@@ -211,6 +211,13 @@ case $DISTRIB_RELEASE in
 	PACKAGE_LIST_DESKTOP="$PACKAGE_LIST_DESKTOP $PACKAGE_LIST_KODI chromium-browser xserver-xorg-input-all dbus-x11 profile-sync-daemon"
 	PACKAGE_LIST_DESKTOP="$PACKAGE_LIST_DESKTOP system-config-printer system-config-printer-gnome language-selector-gnome"
 	;;
+	buster)
+	DEBOOTSTRAP_COMPONENTS="main"
+	PACKAGE_LIST_RELEASE="man-db less kbd net-tools netcat-openbsd gnupg2 dirmngr screen"
+	PACKAGE_LIST_KODI=""
+	PACKAGE_LIST_DESKTOP=""
+	PACKAGE_LIST_ADDITIONAL=""
+	;;
 esac
 
 DEBIAN_MIRROR=${USER_MIRROR-'httpredir.debian.org/debian'}
