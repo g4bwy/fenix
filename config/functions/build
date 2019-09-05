@@ -92,14 +92,14 @@ build_linux() {
     fi
 
     cd ${ROOT}
-    if [ ! -d linux/.git ]; then
+    if [ ! -d $LINUX_DIR/.git ]; then
         echo "Linux repository does not exist, clone linux repository('$LINUX_GIT_BRANCH') from '$LINUX_SOURCE_URL'..."
         ## Clone linux from Khadas GitHub
         git clone --depth 1 $LINUX_SOURCE_URL -b $LINUX_GIT_BRANCH
         [ $? != 0 ] && error_msg "Failed to clone 'linux'" && return -1
     fi
 
-    cd linux/
+    cd $LINUX_DIR
     touch .scmversion
 
     if ! git branch | grep "^* $LINUX_GIT_BRANCH$" > /dev/null; then

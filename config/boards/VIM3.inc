@@ -161,7 +161,7 @@ pack_image_platform() {
 
 		case "$LINUX" in
 			4.9)
-				ln -fs ../../../linux/$LINUX_DTB kvim.dtb
+				ln -fs ../../../`basename $LINUX_DIR`/$LINUX_DTB kvim.dtb
 				ln -fs ../../../u-boot/fip/_tmp/u-boot.bin u-boot.bin
 				ln -fs ../../../u-boot/fip/_tmp/u-boot.bin.sd.bin u-boot.bin.sd.bin
 				ln -fs ../../../u-boot/fip/_tmp/u-boot.bin.usb.bl2 u-boot.bin.usb.bl2
