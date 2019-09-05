@@ -10,6 +10,7 @@
 
 # Git repos
 /linux
+/khadas-linux
 /u-boot
 /rootfs
 /utils
