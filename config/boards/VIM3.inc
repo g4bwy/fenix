@@ -27,8 +27,8 @@ case "$LINUX" in
 	mainline)
 		LINUX_DIR="$BUILD/linux-mainline-*"
 		;;
-	4.9)
-		LINUX_DIR="$ROOT/linux"
+	4.9|4.9-miner)
+		LINUX_DIR="$ROOT/khadas-linux"
 		;;
 esac
 
@@ -160,7 +160,7 @@ pack_image_platform() {
 		rm -rf kvim.dtb
 
 		case "$LINUX" in
-			4.9)
+			4.9|4.9-miner)
 				ln -fs ../../../`basename $LINUX_DIR`/$LINUX_DTB kvim.dtb
 				ln -fs ../../../u-boot/fip/_tmp/u-boot.bin u-boot.bin
 				ln -fs ../../../u-boot/fip/_tmp/u-boot.bin.sd.bin u-boot.bin.sd.bin
