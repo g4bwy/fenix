@@ -27,7 +27,7 @@ make -j8 CROSS_COMPILE=aarch64-linux-gnu- distclean
 
 ## Cleanup Linux
 info_msg "Cleanup Linux..."
-cd $ROOT/linux
+cd $ROOT/`basename $LINUX_DIR`
 make -j8 ARCH=arm64 distclean
 
 echo -e "\nDone."
