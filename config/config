@@ -136,6 +136,10 @@ PACKAGE_LIST="bc bridge-utils build-essential cpufrequtils device-tree-compiler 
 	resolvconf expect iptables mc abootimg wget udev libc6 libdrm2 libgcc1 libstdc++6 libx11-6 \
 	libx11-xcb1 libxcb-dri2-0 libxcb1"
 
+PACKAGE_LIST_MINIMAL="cpufrequtils fake-hwclock psmisc sudo linux-base u-boot-tools sysfsutils \
+	console-setup initramfs-tools usbutils abootimg wget udev libc6 libgcc1 resolvconf \
+	ifupdown bsdmainutils openssh-server sysvinit-core"
+
 # development related packages. remove when they are not needed for building packages in chroot
 PACKAGE_LIST="$PACKAGE_LIST automake libwrap0-dev libssl-dev libnl-3-dev libnl-genl-3-dev"
 
@@ -213,7 +217,8 @@ case $DISTRIB_RELEASE in
 	;;
 	buster)
 	DEBOOTSTRAP_COMPONENTS="main"
-	PACKAGE_LIST_RELEASE="man-db less kbd net-tools netcat-openbsd gnupg2 dirmngr screen"
+	PACKAGE_LIST="$PACKAGE_LIST_MINIMAL"
+	PACKAGE_LIST_RELEASE="bzip2 less net-tools netcat-openbsd screen"
 	PACKAGE_LIST_KODI=""
 	PACKAGE_LIST_DESKTOP=""
 	PACKAGE_LIST_ADDITIONAL=""
